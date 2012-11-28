@@ -56,9 +56,11 @@ public class LoginViewImpl implements LoginView {
     private void buildFrame() {
         mainFrame = new JFrame();
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //mainFrame.setUndecorated(true);
+        mainFrame.setUndecorated(true);
         mainFrame.setResizable(false);
-        mainFrame.setBackground(Color.DARK_GRAY);      
+        //mainFrame.setBackground(Color.DARK_GRAY);      
+        mainFrame.setBackground(new Color(0,0,0,128));
+        
         mainFrame.validate();
     }
     
