@@ -2,8 +2,10 @@ package edu.uc.labs.loginwrapper.views;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -38,12 +40,15 @@ public class LoginViewImpl implements LoginView {
 	@Override
 	public void showFrame() {
 		buildFrame();
+		final Image image = new ImageIcon(getClass().getResource("/Login2.png")).getImage();
 		GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getDefaultScreenDevice().setFullScreenWindow(mainFrame);
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				LoginDialog login = new LoginDialog(mainFrame, R);
+				LoginDialog login = new LoginDialog(mainFrame, image, R);
+				login.pack();
+				login.validate();
 				login.setVisible(true);
 			}
 		});
@@ -59,7 +64,8 @@ public class LoginViewImpl implements LoginView {
 		mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
-		mainFrame.setBackground(Color.DARK_GRAY);
+		mainFrame.setBackground(new Color(40, 35, 35));
+		mainFrame.pack();
 		mainFrame.validate();
 	}
 

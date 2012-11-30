@@ -1,11 +1,11 @@
 package edu.uc.labs.loginwrapper.views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ResourceBundle;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -28,67 +28,58 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public class LoginDialog extends JDialog {
 
-	public LoginDialog(JFrame mainFrame, ResourceBundle R) {
+	public LoginDialog(JFrame mainFrame, Image image, ResourceBundle R) {
 		super(mainFrame, "title", true);
 		this.R = R;
-		setSize(400, 400);
+		this.image = image;
+		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(mainFrame);
-		JPanel p = build();
-		
-		Container cp = getContentPane();
-		cp.setSize(400, 400);
-		cp.add(p);
+		JPanel loginPanel = new LoginPanel();
+		loginPanel.add(build());
+		this.setContentPane(loginPanel);
 		setResizable(false);
-		pack();
-		validate();
 	}
 	
+	private class LoginPanel extends JPanel {
+		
+		public LoginPanel(){
+			//this.setSize(WIDTH, HEIGHT);
+		}
+		
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			g.drawImage(image,0,0,getWidth(),getHeight(),this);
+		}
+
+	}
+
+	private JPanel build() {
+		FormLayout layout = new FormLayout(
+				"38px,right:58px,14px,left:276px,33px", // 6 columns
+				"160px,28px,9px,28px,118px"// 6 rows
+		);
+		PanelBuilder builder = new PanelBuilder(layout);
+		CellConstraints cc = new CellConstraints();
+		builder.add(new JLabel(R.getString("ui.login.username")), cc.xy(2, 2));
+		builder.add(new JTextField(), cc.xy(4, 2));
+		return builder.getPanel();
+	}
+		
+	@Override
+	public void paintComponents(Graphics g) {
+		super.paintComponents(g);
+		log.debug("in the paint components method!");
+		g.drawImage(image,0,0,getWidth(),getHeight(),this);
+	}
 	
-	private JPanel build(){
-		FormLayout layout = new FormLayout("right:pref,4dlu,left:pref:grow,50dlu,4dlu,50dlu",	// 6 columns
-				"top:pref,40dlu,40dlu,40dlu,4dlu,bottom:40dlu"// 6 rows
-				); 
-		PanelBuilder builder = new PanelBuilder(layout);
-		builder.border(Borders.DIALOG);
-		CellConstraints cc = new CellConstraints();
-		builder.add(new JLabel(R.getString("ui.login.title")), cc.xyw(1, 1, 6));
-		return builder.getPanel();
-	}
-
-	private JComponent getLoginPane() {
-		FormLayout layout = new FormLayout("pref:grow,4dlu,pref:grow", 	// 3 columns
-				"pref,4dlu,top:pref:grow"); 						// 3 rows
-		PanelBuilder builder = new PanelBuilder(layout);
-		builder.border(Borders.DIALOG);
-		CellConstraints cc = new CellConstraints();
-		
-		JTextField username = new JTextField();
-		
-		
-		builder.add(new JLabel(R.getString("ui.login.username")), cc.xy(1, 1));
-		builder.add(new JTextField(), cc.xy(3, 1) );
-		
-		builder.add(new JLabel(R.getString("ui.login.password")), cc.xy(1, 3));
-		builder.add(new JTextField(), cc.xy(3, 3));
-		
-		return builder.getPanel();
-	}
-
-	private JComponent getButtonPane() {
-		FormLayout layout = new FormLayout("pref:grow", // 1 column
-				"pref,4dlu,top:pref:grow,pref,bottom:pref"); // 3 rows
-		PanelBuilder builder = new PanelBuilder(layout);
-		builder.border(Borders.DIALOG);
-		CellConstraints cc = new CellConstraints();
-		return builder.getPanel();
-	}
-
-	private JComponent getMessagePane() {
-		return rootPane;
-	}
 
 	private static final long serialVersionUID = 7610511076522587269L;
 	private static final Logger log = Logger.getLogger(LoginDialog.class);
+	
+	private static final int WIDTH = 419;
+	private static final int HEIGHT = 342;
+	
 	private final ResourceBundle R;
+	private final Image image;
 
 }
