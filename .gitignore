@@ -3,3 +3,6 @@ cp.txt
 nbactions.xml
 nb-configuration.xml
 *.log
+.classpath
+.project
+.settings
