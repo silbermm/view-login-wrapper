@@ -1,12 +1,10 @@
 package edu.uc.labs.loginwrapper;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import edu.uc.labs.loginwrapper.ui.LoginView;
-import edu.uc.labs.loginwrapper.ui.LoginViewImpl;
 import java.io.File;
-import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.swing.SwingUtilities;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -17,10 +15,13 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-/**
- * Hello world!
- *
- */
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
+import edu.uc.labs.loginwrapper.views.LoginView;
+import edu.uc.labs.loginwrapper.views.LoginViewImpl;
+
+
 public class Main {
 
     public static void main(String[] args) {
@@ -29,11 +30,18 @@ public class Main {
         
         Config config = ConfigFactory.load();
         
-        LoginView l = new LoginViewImpl(config, R);
-        l.showFrame();
+        final LoginView l = new LoginViewImpl(config, R);
+		SwingUtilities.invokeLater(new Runnable(){
+			@Override
+			public void run() {
+				l.showFrame();
+			}
+			
+		});
     }
 
-    private static void parse(String[] args) {
+    @SuppressWarnings("static-access")
+	private static void parse(String[] args) {
         CommandLineParser parser = new PosixParser();
         options.addOption(OptionBuilder.withArgName("h").withDescription("print this help message").withLongOpt("help").create("h"));
         options.addOption(OptionBuilder.withArgName("v").withDescription("Print version").withLongOpt("version").create("v"));
