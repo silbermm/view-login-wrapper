@@ -1,23 +1,22 @@
 package edu.uc.labs.loginwrapper.views;
 
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -55,13 +54,39 @@ public class LoginDialog extends JDialog {
 
 	private JPanel build() {
 		FormLayout layout = new FormLayout(
-				"38px,right:58px,14px,left:276px,33px", // 6 columns
-				"160px,28px,9px,28px,118px"// 6 rows
+				"30px,right:68px,14px,97px,80px,9px,80px,33px",
+				"150px,28px,9px,28px,60px,58px"
 		);
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
-		builder.add(new JLabel(R.getString("ui.login.username")), cc.xy(2, 2));
-		builder.add(new JTextField(), cc.xy(4, 2));
+		
+		// Create the Labels
+		JLabel usernameLbl = new JLabel(R.getString("ui.login.username"));
+		usernameLbl.setForeground(Color.WHITE);
+		JLabel passLbl = new JLabel(R.getString("ui.login.password"));
+		passLbl.setForeground(Color.WHITE);
+		
+		// Create the TextFields
+		JTextField usernameField = new JTextField(50);
+		usernameField.setMinimumSize(new Dimension(266,28));
+		JTextField passwordField = new JPasswordField(50);
+		passwordField.setMinimumSize(new Dimension(266,28));
+		
+		// Create the Buttons
+		JButton loginBtn = new JButton(R.getString("ui.login.btn.ok"));
+		JButton passBtn = new JButton(R.getString("ui.login.btn.reset"));
+		
+		
+		builder.add(usernameLbl, cc.xy(2, 2));
+		builder.add(usernameField, cc.xyw(4, 2, 4));
+		builder.add(passLbl, cc.xy(2, 4));
+		builder.add(passwordField, cc.xyw(4, 4, 4));
+		
+		
+		
+		builder.add(loginBtn, cc.xy(7, 5));
+		builder.add(passBtn, cc.xy(5, 5));
+		
 		return builder.getPanel();
 	}
 		

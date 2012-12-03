@@ -1,5 +1,7 @@
 package edu.uc.labs.loginwrapper.views;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /**
@@ -8,7 +10,7 @@ import javax.swing.JFrame;
  */
 public interface LoginView {
     
-    void showFrame();
+    void showFrame() throws IOException;
     JFrame getMainFrame();
     
 }

@@ -1,6 +1,7 @@
 package edu.uc.labs.loginwrapper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.SwingUtilities;
@@ -34,7 +35,11 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable(){
 			@Override
 			public void run() {
-				l.showFrame();
+				try {
+					l.showFrame();
+				} catch (IOException e) {
+					log.error(e.getMessage());
+				}
 			}
 			
 		});
