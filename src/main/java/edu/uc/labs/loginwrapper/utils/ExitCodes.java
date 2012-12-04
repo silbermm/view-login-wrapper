@@ -8,8 +8,18 @@ public enum ExitCodes {
 	RDP_FAILED_TO_START(4, "Remote desktop failed to start"),
 	RDP_OPERATION_FAILED(5, "Remote desktop operation failed"),
 	TUNNEL_CONNECTION_LOST(6, "Tunnel connection was lost"),
-	UNKNOWN_RESULT_DURING_AUTHENTICATION(11, "Unknown result during authentication");
-	
+	UNKNOWN_RESULT_DURING_AUTHENTICATION(11, "Unknown result during authentication"),
+	AUTHENTICATION_ERROR(12, "Authentication Error"),
+	UNKNOWN_AUTHENTICATION_METHOD(13, "Unknown authentication method used"),
+	INVALID_SERVER_RESPONSE(14, "Invalid server response"),
+	DESKTOP_DISCONNECTED(15, "Desktop was disconnected"),
+	TUNNEL_DISCONNECTED(16, "Tunnel was disconnected"),
+	RMKS_DISCONNECTED(20, "Remote Mouse, Keyboard and screen were disconnected"),
+	PIN_ERROR(21, "PIN Error"),
+	PIN_MISMATCH(22, "PIN Mismatch"),
+	PASSWORD_MISMATCH(23, "Password Mismatch"),
+	CONNECTION_SERVER_ERROR(24, "View Connection Server error"),
+	DESKTOP_UNAVAILABLE(25, "Desktop was unavailable");
 	
 	
 	

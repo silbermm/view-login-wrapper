@@ -37,16 +37,15 @@ public class LoginViewImpl implements LoginView {
 		}
 	}
 
-	@Override
 	public void showFrame() {
 		buildFrame();
-		final Image image = new ImageIcon(getClass().getResource("/Login2.png")).getImage();
+		final Image image = new ImageIcon(getClass().getResource("/Login4.png")).getImage();
 		GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getDefaultScreenDevice().setFullScreenWindow(mainFrame);
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				LoginDialog login = new LoginDialog(mainFrame, image, R);
+				LoginDialog login = new LoginDialog(mainFrame, image, config, R);
 				login.pack();
 				login.validate();
 				login.setVisible(true);
@@ -55,7 +54,6 @@ public class LoginViewImpl implements LoginView {
 
 	}
 
-	@Override
 	public JFrame getMainFrame() {
 		return mainFrame;
 	}
