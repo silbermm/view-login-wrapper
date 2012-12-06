@@ -5,10 +5,11 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Matt Silbernagel
  */
 public interface LoginView {
-    void showFrame() throws IOException;
-    JFrame getMainFrame();
+	void showFrame() throws IOException;
+	void closeFrame();
+	JFrame getMainFrame();
 }

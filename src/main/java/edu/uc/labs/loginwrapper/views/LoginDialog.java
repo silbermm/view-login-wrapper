@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.util.ResourceBundle;
 
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -32,24 +33,19 @@ import edu.uc.labs.loginwrapper.models.LoginAction;
  */
 public class LoginDialog extends JDialog {
 
-	public LoginDialog(JFrame mainFrame, Image image, Config config, ResourceBundle R) {
+	public LoginDialog(JFrame mainFrame, Config config) {
 		super(mainFrame, "title", true);
-		this.R = R;
-		this.image = image;
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(mainFrame);
-		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loginAction = new LoginAction(this, config);
 
-		
 		JPanel loginPanel = new LoginPanel();
 		loginPanel.add(build());
 		this.setContentPane(loginPanel);
 		setResizable(false);
 		thisDialog = this;
 	}
-
-
 
 	private JPanel build() {
 		FormLayout layout = new FormLayout(
@@ -92,27 +88,28 @@ public class LoginDialog extends JDialog {
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 	}
 
-	public static void showError(final String message){
+	public static void showError(final String message) {
 		JOptionPane.showMessageDialog(thisDialog, message);
 	}
-	
-	public void clearUsername(){
-		this.usernameField.setText("");
+
+	public void clearUsername() {
+		log.debug("Clearing the usenname field...");
+		this.usernameField.setText(null);
 	}
-	
-	public void clearPassword(){
+
+	public void clearPassword() {
 		this.passwordField.setText("");
 	}
-	
-	public String getUsername(){
+
+	public String getUsername() {
 		return this.usernameField.getText();
 	}
-	
-	public String getPassword(){
+
+	public String getPassword() {
 		char[] passwordByte = passwordField.getPassword();
 		return new String(passwordByte);
 	}
-	
+
 	private class LoginPanel extends JPanel {
 
 		private static final long serialVersionUID = 349413799529915814L;
@@ -125,18 +122,20 @@ public class LoginDialog extends JDialog {
 
 	private static final long serialVersionUID = 7610511076522587269L;
 	private static final Logger log = Logger.getLogger(LoginDialog.class);
-
-	private static JDialog thisDialog;
+	private static ResourceBundle R = ResourceBundle
+			.getBundle("MessagesBundle");
 	
+	private static JDialog thisDialog;
+
 	private static final int WIDTH = 419;
 	private static final int HEIGHT = 342;
-
-	private final ResourceBundle R;
-	private final Image image;
+	
+	private final Image image = new ImageIcon(getClass().getResource("/Login4.png"))
+	.getImage();
 
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	
+
 	private Action loginAction;
 
 }

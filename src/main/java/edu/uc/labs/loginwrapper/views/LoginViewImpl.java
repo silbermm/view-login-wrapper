@@ -25,9 +25,8 @@ import com.typesafe.config.Config;
  */
 public class LoginViewImpl implements LoginView {
 
-	public LoginViewImpl(final Config config, final ResourceBundle R) {
+	public LoginViewImpl(final Config config) {
 		this.config = config;
-		this.R = R;
 		PlasticLookAndFeel laf = new PlasticXPLookAndFeel();
 		PlasticLookAndFeel.setCurrentTheme(new ExperienceBlue());
 		try {
@@ -39,13 +38,11 @@ public class LoginViewImpl implements LoginView {
 
 	public void showFrame() {
 		buildFrame();
-		final Image image = new ImageIcon(getClass().getResource("/Login4.png")).getImage();
-		GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getDefaultScreenDevice().setFullScreenWindow(mainFrame);
+		//GraphicsEnvironment.getLocalGraphicsEnvironment()
+		//		.getDefaultScreenDevice().setFullScreenWindow(mainFrame);
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				LoginDialog login = new LoginDialog(mainFrame, image, config, R);
 				login.pack();
 				login.validate();
 				login.setVisible(true);
@@ -60,15 +57,21 @@ public class LoginViewImpl implements LoginView {
 
 	private void buildFrame() {
 		mainFrame = new JFrame();
-		mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.setResizable(false);
 		mainFrame.setBackground(new Color(55, 50, 50));
 		mainFrame.pack();
 		mainFrame.validate();
+		login = new LoginDialog(mainFrame, config);
+	}
+
+	public void closeFrame() {
+		login.dispose();
+		mainFrame.dispose();
 	}
 
 	private static final Logger log = Logger.getLogger(LoginViewImpl.class);
 	private final Config config;
-	private final ResourceBundle R;
-	private static JFrame mainFrame;
+	private JFrame mainFrame;
+	private LoginDialog login;
 }
